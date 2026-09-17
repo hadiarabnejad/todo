@@ -1,0 +1,71 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'core_app/admin-login.css' %}">
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login-page{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block usertools %}{% endblock %}
+{% block content_title %}{% endblock %}
+
+{% block branding %}
+    <div class="login-brand">
+        <span class="login-brand-mark"><i class="fa fa-check"></i></span>
+        <span>{{ site_header|default:_('Django administration') }}</span>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main" class="login-shell">
+    {% if form.errors %}
+        <p class="errornote">
+            {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+        </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class="errornote">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form" novalidate>
+        {% csrf_token %}
+        <div class="login-card">
+            <div class="login-card-header">
+                <span>{{ site_header|default:_('Django administration') }}</span>
+                <span class="login-icon"><i class="fa fa-lock"></i></span>
+            </div>
+
+            <div class="login-card-body">
+                <div class="form-row">
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}:</label>
+                    {{ form.username }}
+                </div>
+
+                <div class="form-row">
+                    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}:</label>
+                    {{ form.password }}
+                </div>
+
+                {% url 'admin_password_reset' as password_reset_url %}
+                {% if password_reset_url %}
+                    <div class="password-reset-link">
+                        <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+                    </div>
+                {% endif %}
+
+                <div class="submit-row">
+                    <input type="submit" value="{% translate 'Log in' %}">
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</div>
+{% endblock %}

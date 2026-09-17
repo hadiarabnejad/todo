@@ -46,15 +46,20 @@
                         <div class="hero-content">
                             <div>
                                 <span class="brand-pill">Coming Soon</span>
-                                <h1>Organize your day.<br>Achieve more.</h1>
+                                <h1 class="typewriter-heading" aria-label="Organize your day. Achieve more.">
+                                    <span class="typewriter-text" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Organize your day. Achieve more.</span>
+                                </h1>
                                 <p class="lead text-soft">
                                     A smarter way to plan priorities, stay focused, and turn your to-dos into real momentum—without the clutter.
                                 </p>
 
-                                <form class="notify-form" action="#" method="post">
-                                    <input type="email" aria-label="Email address" placeholder="Enter your email" />
-                                    <button type="submit">Notify Me</button>
+                                <form class="notify-form" id="notify-form" novalidate>
+                                    <label class="visually-hidden" for="email">Email address</label>
+                                    <input id="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="form-message" placeholder="Enter your email" />
+                                    <button type="submit">Notify me <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
                                 </form>
+                                <p class="form-message" id="form-message" aria-live="polite"></p>
 
                                 <div class="meta-row">
                                     <span class="meta-item"><span class="status-dot"></span> Early access launching soon</span>
@@ -135,6 +140,11 @@
                 </div>
             </div>
         </main>
+
+        <footer class="page-footer" id="updates">
+            <span>Built for calmer, more intentional days.</span>
+            <a href="mailto:hello@example.com">Say hello <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+        </footer>
     </div>
 
     <script src="{% static 'core_app/bootstrap.bundle.min.js' %}"></script>
@@ -147,6 +157,50 @@
                 }, 900);
             }
         });
+
+        document.getElementById('notify-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const email = document.getElementById('email');
+            const message = document.getElementById('form-message');
+
+            if (!email.validity.valid) {
+                message.textContent = 'Enter a valid email address to join the early-access list.';
+                message.className = 'form-message is-error';
+                email.focus();
+                return;
+            }
+
+            message.textContent = "You're on the list — we'll be in touch soon.";
+            message.className = 'form-message is-success';
+            event.currentTarget.reset();
+        });
+
+        const heading = document.querySelector('.typewriter-heading');
+        const typewriterText = document.querySelector('.typewriter-text');
+        const headingText = 'Organize your day.\nAchieve more.';
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function renderHeading(characters) {
+            typewriterText.innerHTML = characters.replace('\n', '<br>');
+        }
+
+        if (prefersReducedMotion) {
+            renderHeading(headingText);
+            heading.classList.add('is-complete');
+        } else {
+            let characterIndex = 0;
+            const typeHeading = function () {
+                renderHeading(headingText.slice(0, characterIndex));
+                if (characterIndex < headingText.length) {
+                    characterIndex += 1;
+                    window.setTimeout(typeHeading, headingText[characterIndex - 1] === '\n' ? 260 : 58);
+                } else {
+                    heading.classList.add('is-complete');
+                }
+            };
+
+            window.setTimeout(typeHeading, 500);
+        }
     </script>
 </body>
 </html>

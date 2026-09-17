@@ -1,0 +1,497 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}{{ block.super }} login-page{% endblock %}
+{% block nav-global %}{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block usertools %}{% endblock %}
+{% block content_title %}{% endblock %}
+{% block extrastyle %}
+    {{ block.super }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --taskflow-bg-1: #f4f7fb;
+            --taskflow-bg-2: #edf4f7;
+            --taskflow-card: rgba(255, 255, 255, 0.96);
+            --taskflow-header: linear-gradient(135deg, #4c8198 0%, #3b6d83 100%);
+            --taskflow-accent: #4d8ca8;
+            --taskflow-accent-dark: #3a7389;
+            --taskflow-text: #1d2430;
+            --taskflow-muted: #64748b;
+            --taskflow-border: #dfe7ee;
+            --taskflow-shadow: rgba(15, 23, 42, 0.12);
+            --danger-soft: rgba(220, 53, 69, 0.08);
+            --danger-border: rgba(220, 53, 69, 0.18);
+        }
+
+        body.login-page {
+            background:
+                radial-gradient(circle at top left, rgba(93, 124, 233, 0.14), transparent 25%),
+                radial-gradient(circle at bottom right, rgba(28, 197, 155, 0.12), transparent 30%),
+                linear-gradient(135deg, var(--taskflow-bg-1) 0%, var(--taskflow-bg-2) 100%);
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body.login-page #container {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: block;
+            padding: 32px 16px;
+            min-width: 0;
+        }
+
+        body.login-page .main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: calc(100vh - 64px);
+            margin: 0;
+            padding: 0;
+        }
+
+        body.login-page #header,
+        body.login-page #nav-sidebar,
+        body.login-page #toggle-nav-sidebar,
+        body.login-page .main > #nav-sidebar,
+        body.login-page .toggle-nav-sidebar,
+        body.login-page #content > .titles-and-tools {
+            display: none !important;
+        }
+
+        body.login-page .main.shifted {
+            display: flex !important;
+            margin-left: 0 !important;
+        }
+
+        body.login-page #content {
+            width: min(100%, 560px);
+            background: transparent;
+            border: 0;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        body.login-page #content-main {
+            width: 100%;
+            display: block;
+        }
+
+        body.login-page .login-shell {
+            width: 100%;
+            min-height: calc(100vh - 64px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        body.login-page form {
+            width: 100%;
+            max-width: 540px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+
+        .login-card {
+            border-radius: 26px;
+            overflow: hidden;
+            border: 1px solid rgba(126, 143, 160, 0.16);
+            box-shadow: 0 24px 80px rgba(15, 23, 42, 0.08), 0 8px 20px rgba(15, 23, 42, 0.05);
+            background: var(--taskflow-card);
+            backdrop-filter: blur(6px);
+        }
+
+        .login-card .card-header {
+            background: var(--taskflow-header);
+            padding: 1.75rem 1.8rem;
+            color: #fff;
+            border-bottom: 0;
+        }
+
+        .brand-area {
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+        }
+
+        .brand-logo i {
+            font-size: 1.3rem;
+            color: #f8fbfe;
+        }
+
+        .brand-copy {
+            flex: 1;
+            text-align: left;
+        }
+
+        .brand-name {
+            margin: 0;
+            font-size: clamp(1.8rem, 2.3vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 1.1;
+            color: #fff;
+        }
+
+        .brand-copy span {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.74rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0.85;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .login-card .card-body {
+            padding: 2rem 2rem 1.5rem;
+        }
+
+        .welcome {
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-title {
+            margin: 0 0 0.5rem;
+            font-size: clamp(2.1rem, 3vw, 3rem);
+            letter-spacing: -0.06em;
+            font-weight: 800;
+            color: var(--taskflow-text);
+        }
+
+        .welcome-subtitle {
+            margin: 0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--taskflow-muted);
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: var(--taskflow-text);
+            font-size: 1.05rem;
+            margin-bottom: 0.65rem;
+        }
+
+        .input-group {
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: none;
+        }
+
+        .input-group-text {
+            background: #f8fafc;
+            border: 1.5px solid var(--taskflow-border);
+            border-right: 0;
+            color: var(--taskflow-accent);
+            min-width: 48px;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .input-group .form-control,
+        .input-group .form-control:focus {
+            border: 1.5px solid var(--taskflow-border);
+            border-left: 0;
+            box-shadow: none;
+            min-height: 52px;
+            font-size: 1.04rem;
+            background: #fff;
+            color: var(--taskflow-text);
+        }
+
+        .input-group .form-control:focus {
+            border-color: rgba(77, 140, 168, 0.85);
+            box-shadow: 0 0 0 4px rgba(77, 140, 168, 0.12);
+        }
+
+        .password-wrap .toggle-password {
+            border: 1.5px solid var(--taskflow-border);
+            border-left: 0;
+            background: #f8fafc;
+            color: var(--taskflow-muted);
+            min-width: 52px;
+            transition: all 0.2s ease;
+        }
+
+        .password-wrap .toggle-password:hover,
+        .password-wrap .toggle-password:focus {
+            background: #eef5f8;
+            color: var(--taskflow-accent-dark);
+        }
+
+        .is-invalid,
+        .invalid-feedback {
+            border-color: var(--danger-border) !important;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #b3261e;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            color: var(--taskflow-text);
+            font-size: 0.96rem;
+        }
+
+        .form-check-input {
+            width: 1.05rem;
+            height: 1.05rem;
+            border: 1.5px solid var(--taskflow-border);
+            border-radius: 0.45rem;
+            margin-top: 0;
+            background-color: white;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--taskflow-accent);
+            border-color: var(--taskflow-accent);
+            box-shadow: none;
+        }
+
+        .remember-label {
+            font-weight: 500;
+            color: var(--taskflow-text);
+        }
+
+        .forgot-link {
+            color: var(--taskflow-accent-dark);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s ease;
+        }
+
+        .forgot-link:hover {
+            opacity: 0.85;
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            min-height: 58px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--taskflow-accent) 0%, var(--taskflow-accent-dark) 100%);
+            border: 0;
+            font-size: 1.12rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            box-shadow: 0 16px 28px rgba(77, 140, 168, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 30px rgba(77, 140, 168, 0.28);
+            filter: brightness(1.02);
+        }
+
+        .alert {
+            border-radius: 12px;
+            font-size: 0.95rem;
+            border: 1px solid var(--danger-border);
+            background: var(--danger-soft);
+            color: #b3261e;
+            margin-bottom: 1.25rem;
+        }
+
+        @media (max-width: 575.98px) {
+            body.login-page #container {
+                padding: 20px 12px;
+            }
+
+            .login-card .card-header {
+                padding: 1.25rem 1.1rem;
+            }
+
+            .login-card .card-body {
+                padding: 1.2rem 1.1rem 1.1rem;
+            }
+
+            .brand-area {
+                gap: 0.75rem;
+            }
+
+            .brand-logo {
+                width: 42px;
+                height: 42px;
+            }
+
+            .brand-copy span {
+                letter-spacing: 0.12em;
+            }
+
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.98rem;
+            }
+
+            .d-flex.justify-content-between.align-items-center {
+                display: block !important;
+            }
+
+            .form-check {
+                margin-bottom: 0.9rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block branding %}
+    <div class="login-brand d-none"></div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main" class="login-shell">
+    <form action="{{ app_path }}" method="post" id="login-form" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.non_field_errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if form.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div>{{ field.label }}: {{ error }}</div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="login-card card border-0">
+            <div class="card-header border-0">
+                <div class="brand-area d-flex align-items-center">
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <div class="brand-copy">
+                        <h1 class="brand-name">{{ site_header|default:_('TaskFlow Admin') }}</h1>
+                        <span>Secure access</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome">
+                    <h2 class="welcome-title">Welcome back</h2>
+                    <p class="welcome-subtitle">Sign in to manage your workspace and stay on top of everything.</p>
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="invalid-feedback d-block">{{ form.username.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+                    <div class="input-group password-wrap">
+                        <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                        {{ form.password }}
+                        <button type="button" class="toggle-password" data-password-toggle="{{ form.password.id_for_label }}" aria-label="Toggle password visibility">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="invalid-feedback d-block">{{ form.password.errors|join:", " }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="remember_me" name="remember_me">
+                        <label class="remember-label" for="remember_me">Remember me</label>
+                    </div>
+
+                    {% url 'admin_password_reset' as password_reset_url %}
+                    {% if password_reset_url %}
+                        <a href="{{ password_reset_url }}" class="forgot-link">Forgot Password?</a>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-login btn-primary w-100">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>Log In
+                </button>
+            </div>
+        </div>
+
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const usernameField = document.getElementById('{{ form.username.id_for_label }}');
+        const passwordField = document.getElementById('{{ form.password.id_for_label }}');
+
+        if (usernameField) {
+            usernameField.classList.add('form-control', 'form-control-lg');
+        }
+
+        if (passwordField) {
+            passwordField.classList.add('form-control', 'form-control-lg');
+        }
+
+        const toggleButtons = document.querySelectorAll('[data-password-toggle]');
+
+        toggleButtons.forEach(function (button) {
+            const targetId = button.getAttribute('data-password-toggle');
+            const target = document.getElementById(targetId);
+
+            if (!target) return;
+
+            button.addEventListener('click', function () {
+                const isPassword = target.type === 'password';
+                target.type = isPassword ? 'text' : 'password';
+
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-eye', !isPassword);
+                    icon.classList.toggle('fa-eye-slash', isPassword);
+                }
+
+                button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            });
+        });
+    });
+</script>
+{% endblock %}

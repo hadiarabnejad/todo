@@ -1,0 +1,253 @@
+:root {
+    --taskflow-bg: #eef2f5;
+    --taskflow-panel: rgba(255, 255, 255, 0.92);
+    --taskflow-header: #4c8097;
+    --taskflow-header-strong: #3c6d82;
+    --taskflow-accent: #f5d86b;
+    --taskflow-primary: #4e8ea7;
+    --taskflow-primary-dark: #3d7187;
+    --taskflow-border: #dfe6eb;
+    --taskflow-input: #ffffff;
+    --taskflow-text: #192533;
+    --taskflow-muted: #64748b;
+    --taskflow-error: #b3261e;
+    --taskflow-shadow: rgba(18, 28, 45, 0.12);
+}
+
+body.login-page {
+    background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(52, 211, 153, 0.1), transparent 30%),
+        linear-gradient(135deg, #f5f7fa 0%, #edf1f4 100%);
+    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+}
+
+body.login-page #container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+body.login-page #header {
+    display: none;
+}
+
+body.login-page .main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body.login-page .main > #nav-sidebar,
+body.login-page #nav-sidebar,
+body.login-page #toggle-nav-sidebar,
+body.login-page .toggle-nav-sidebar {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+body.login-page .main.shifted {
+    margin-left: 0;
+}
+
+body.login-page #content {
+    width: min(100%, 540px);
+    padding: 0;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.login-page .login-shell {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+body.login-page .login-card {
+    width: min(100%, 520px);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px var(--taskflow-shadow);
+    backdrop-filter: blur(8px);
+}
+
+body.login-page .login-card-header {
+    background: linear-gradient(135deg, var(--taskflow-header), var(--taskflow-header-strong));
+    color: #f9fafb;
+    min-height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 18px 26px;
+}
+
+body.login-page .login-header-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+body.login-page .login-title {
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+body.login-page .login-card-header small {
+    display: block;
+    opacity: 0.9;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+body.login-page .login-brand {
+    display: none;
+}
+
+body.login-page .login-icon {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+body.login-page .login-card-body {
+    padding: 26px 28px 24px;
+}
+
+body.login-page .login-welcome {
+    margin-bottom: 22px;
+}
+
+body.login-page .login-welcome h2 {
+    margin: 0 0 8px;
+    color: var(--taskflow-text);
+    font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.1;
+}
+
+body.login-page .login-welcome p {
+    margin: 0;
+    color: var(--taskflow-muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+body.login-page .form-row {
+    display: block;
+    margin-bottom: 18px;
+}
+
+body.login-page .form-row label {
+    display: inline-block;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: var(--taskflow-text);
+    font-weight: 700;
+}
+
+body.login-page .form-row input[type="text"],
+body.login-page .form-row input[type="password"] {
+    width: 100%;
+    min-height: 48px;
+    border: 1.5px solid var(--taskflow-border);
+    border-radius: 12px;
+    background: var(--taskflow-input);
+    color: var(--taskflow-text);
+    font-size: 1rem;
+    padding: 11px 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+body.login-page .form-row input[type="text"]:focus,
+body.login-page .form-row input[type="password"]:focus {
+    outline: none;
+    border-color: rgba(78, 142, 167, 0.8);
+    box-shadow: 0 0 0 4px rgba(78, 142, 167, 0.11);
+    transform: translateY(-1px);
+}
+
+body.login-page .password-reset-link {
+    margin: 10px 0 18px;
+    text-align: right;
+}
+
+body.login-page .password-reset-link a {
+    color: var(--taskflow-primary-dark);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+body.login-page .password-reset-link a:hover {
+    text-decoration: underline;
+}
+
+body.login-page .submit-row {
+    display: grid;
+    margin-top: 18px;
+}
+
+body.login-page .submit-row input {
+    appearance: none;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--taskflow-primary), var(--taskflow-primary-dark));
+    color: #fff;
+    font-size: 1.08rem;
+    font-weight: 700;
+    min-width: 100%;
+    min-height: 52px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    box-shadow: 0 14px 28px rgba(78, 142, 167, 0.24);
+}
+
+body.login-page .submit-row input:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.03);
+    box-shadow: 0 18px 30px rgba(78, 142, 167, 0.28);
+}
+
+body.login-page .errornote {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(179, 38, 30, 0.08);
+    border: 1px solid rgba(179, 38, 30, 0.14);
+    color: var(--taskflow-error);
+    font-weight: 500;
+}
+
+@media (max-width: 576px) {
+    body.login-page #container {
+        padding: 20px 12px;
+    }
+
+    body.login-page .login-card-header {
+        padding: 16px 18px;
+    }
+
+    body.login-page .login-card-body {
+        padding: 20px 18px 18px;
+    }
+}

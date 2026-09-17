@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+admin.site.site_header = 'TaskFlow Admin'
+admin.site.site_title = 'TaskFlow Admin'
+admin.site.index_title = 'Dashboard'
+
 urlpatterns = [
     path('', include('core_app.urls')),
     path('admin/', admin.site.urls),

@@ -5,110 +5,127 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo App | Coming Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'core_app/bootstrap.min.css' %}" />
-    <style>
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #07111f, #0f172a 50%, #111827);
-            color: #edf2ff;
-        }
-
-        .hero-card {
-            background: rgba(15, 23, 42, 0.82);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1.5rem;
-            box-shadow: 0 30px 80px rgba(2, 6, 23, 0.7);
-        }
-
-        .brand-pill {
-            padding: 0.6rem 1rem;
-            border-radius: 999px;
-            background: rgba(34, 197, 94, 0.08);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            color: #22c55e;
-            letter-spacing: 0.12em;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .text-soft {
-            color: #a8b3cf;
-        }
-
-        .feature-box {
-            background: rgba(148, 163, 184, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1rem;
-        }
-
-        .icon-box {
-            width: 2.7rem;
-            height: 2.7rem;
-            border-radius: 0.8rem;
-            background: rgba(139, 92, 246, 0.15);
-            color: #d8b4fe;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'core_app/style.css' %}" />
 </head>
 <body>
-    <div class="container py-5">
-        <div class="hero-card p-4 p-md-5 p-lg-5">
-            <div class="text-center">
-                <span class="brand-pill">Coming Soon</span>
+    <div class="page-shell">
+        <div class="ambient ambient-one"></div>
+        <div class="ambient ambient-two"></div>
+
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark">✓</span>
+                <span>TODO</span>
             </div>
 
-            <div class="row align-items-center mt-4">
-                <div class="col-lg-7 text-center text-lg-start">
-                    <h1 class="display-4 fw-bold mb-3 lh-1">Your smarter way to manage tasks.</h1>
-                    <p class="lead text-soft mb-4 mx-auto mx-lg-0 w-100" style="max-width: 640px;">
-                        We’re building a clean and focused todo experience to help you plan better,
-                        stay organized, and get more done every day.
-                    </p>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#features">Features</a>
+                <a href="#launch">Launch</a>
+                <a href="#updates">Updates</a>
+            </nav>
+        </header>
 
-                    <div class="d-flex flex-column flex-sm-row justify-content-center justify-content-lg-start gap-3 mb-4">
-                        <button type="button" class="btn btn-primary rounded-4 px-4 py-3 fw-semibold shadow-lg">Notify Me</button>
-                        <button type="button" class="btn btn-outline-light rounded-4 px-4 py-3 fw-semibold">Learn More</button>
+        <main class="hero-card" id="launch">
+            <div class="hero-inner">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-7">
+                        <div class="hero-content">
+                            <div>
+                                <span class="brand-pill">Coming Soon</span>
+                                <h1>Plan better.<br>Finish more.</h1>
+                                <p class="lead text-soft">
+                                    A focused productivity experience designed to help you organize tasks,
+                                    eliminate overwhelm, and build momentum with less friction.
+                                </p>
+
+                                <form class="notify-form" action="#" method="post">
+                                    <input type="email" aria-label="Email address" placeholder="Enter your email" />
+                                    <button type="submit">Notify Me</button>
+                                </form>
+
+                                <div class="meta-row">
+                                    <span class="meta-item"><span class="status-dot"></span> Early access opening soon</span>
+                                    <span class="meta-item">No spam • Just updates</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mx-auto mx-lg-0 w-100" style="max-width: 420px;">
-                        <div class="d-flex justify-content-between text-secondary small mb-2">
-                            <span>Launch progress</span>
-                            <span>72%</span>
-                        </div>
-                        <div class="progress rounded-pill" role="progressbar" aria-label="Launch progress" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-bar rounded-pill" style="width: 72%"></div>
+                    <div class="col-lg-5">
+                        <div class="stats-stack">
+                            <div class="dashboard-card">
+                                <div class="mini-header">
+                                    <span>Today</span>
+                                    <div class="mini-dots" aria-hidden="true">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+
+                                <div class="task-list" aria-label="Sample tasks">
+                                    <div class="task-item">
+                                        <div class="task-main">
+                                            <span class="check">✓</span>
+                                            <span>Design sprint review</span>
+                                        </div>
+                                        <span>9:00</span>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-main">
+                                            <span class="check">✓</span>
+                                            <span>Weekly planning</span>
+                                        </div>
+                                        <span>11:30</span>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-main">
+                                            <span class="check">✓</span>
+                                            <span>Follow up on tasks</span>
+                                        </div>
+                                        <span>14:00</span>
+                                    </div>
+                                </div>
+
+                                <div class="progress-panel">
+                                    <div class="ring" aria-label="76 percent complete">
+                                        <span class="ring-label">76%</span>
+                                    </div>
+                                    <div class="progress-copy">
+                                        <strong>2 tasks left</strong>
+                                        <small>Momentum is building</small>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-lg-5 mt-4 mt-lg-0">
-                    <div class="row g-3">
-                        <div class="col-12 col-sm-6 col-lg-12">
-                            <div class="feature-box p-3 h-100">
-                                <div class="icon-box d-inline-flex align-items-center justify-content-center mb-3 fs-5">✓</div>
-                                <h5 class="mb-2">Task Tracking</h5>
-                                <p class="text-soft mb-0">Organize your day with clean, simple task management.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-12">
-                            <div class="feature-box p-3 h-100">
-                                <div class="icon-box d-inline-flex align-items-center justify-content-center mb-3 fs-5">⚡</div>
-                                <h5 class="mb-2">Fast Workflow</h5>
-                                <p class="text-soft mb-0">Move quickly from plan to action without friction.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-12">
-                            <div class="feature-box p-3 h-100">
-                                <div class="icon-box d-inline-flex align-items-center justify-content-center mb-3 fs-5">★</div>
-                                <h5 class="mb-2">Better Focus</h5>
-                                <p class="text-soft mb-0">Clear priorities help you stay productive and consistent.</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="feature-grid" id="features">
+                <div class="feature-box">
+                    <div class="icon-box">✓</div>
+                    <h5>Smart task tracking</h5>
+                    <p>Capture priorities in seconds and keep your day structured without clutter.</p>
+                </div>
+
+                <div class="feature-box">
+                    <div class="icon-box">⚡</div>
+                    <h5>Focused workflow</h5>
+                    <p>Move from ideas to action quickly with a clean, distraction-free experience.</p>
+                </div>
+
+                <div class="feature-box">
+                    <div class="icon-box">★</div>
+                    <h5>Built for momentum</h5>
+                    <p>Stay consistent with simple routines, progress insights, and better daily habits.</p>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
     <script src="{% static 'core_app/bootstrap.bundle.min.js' %}"></script>

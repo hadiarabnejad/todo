@@ -36,6 +36,17 @@ body {
     overflow-x: hidden;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.25;
+    background-image: linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+    background-size: 52px 52px;
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 70%);
+}
+
 .preloader {
     position: fixed;
     inset: 0;
@@ -182,9 +193,25 @@ body {
     box-shadow: var(--shadow);
     backdrop-filter: blur(8px);
     overflow: hidden;
+    isolation: isolate;
+}
+
+.hero-card::before {
+    content: "";
+    position: absolute;
+    width: 440px;
+    height: 440px;
+    top: -280px;
+    right: -170px;
+    z-index: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.22), transparent 68%);
+    pointer-events: none;
 }
 
 .hero-inner {
+    position: relative;
+    z-index: 1;
     padding: 40px 32px 28px;
 }
 
@@ -206,6 +233,7 @@ body {
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 h1 {
@@ -283,12 +311,15 @@ h1 {
 
 .notify-form {
     display: flex;
+    align-items: center;
     max-width: 520px;
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(148, 163, 184, 0.2);
+    min-height: 64px;
+    padding: 5px;
+    background: rgba(7, 17, 31, 0.66);
+    border: 1px solid rgba(148, 163, 184, 0.24);
     border-radius: 18px;
-    overflow: hidden;
     margin-bottom: 18px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
 .notify-form input {
@@ -297,8 +328,9 @@ h1 {
     background: transparent;
     border: 0;
     color: var(--text);
-    padding: 1rem 1.1rem;
+    padding: 0.9rem 1.15rem;
     outline: none;
+    font-size: 0.98rem;
 }
 
 .notify-form input::placeholder {
@@ -308,14 +340,18 @@ h1 {
 .notify-form:focus-within {
     border-color: rgba(139, 92, 246, 0.8);
     box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.14);
+    background: rgba(7, 17, 31, 0.9);
 }
 
 .notify-form button {
     border: 0;
-    padding: 1rem 1.3rem;
+    align-self: stretch;
+    min-width: 135px;
+    padding: 0.85rem 1.15rem;
     background: linear-gradient(135deg, #6ee7b7, #34d399);
     color: #062b1d;
     font-weight: 700;
+    border-radius: 13px;
     transition: filter 0.2s ease, transform 0.2s ease;
 }
 
@@ -324,7 +360,16 @@ h1 {
 }
 
 .notify-form button:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
+}
+
+.notify-form button i {
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+}
+
+.notify-form button:hover i {
+    transform: translateX(3px);
 }
 
 .notify-form button:focus-visible {
@@ -385,6 +430,14 @@ h1 {
     overflow: hidden;
 }
 
+.dashboard-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 32%);
+}
+
 .dashboard-card::before {
     content: "";
     position: absolute;
@@ -443,6 +496,30 @@ h1 {
     gap: 10px;
 }
 
+.mini-header small {
+    color: rgba(168, 179, 207, 0.62);
+    font-size: inherit;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.task-item {
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.task-item:hover {
+    background: rgba(148, 163, 184, 0.09);
+    border-color: rgba(148, 163, 184, 0.22);
+    transform: translateX(2px);
+}
+
+.task-item.is-complete .task-main > span:last-child {
+    color: rgba(237, 242, 255, 0.7);
+    text-decoration: line-through;
+    text-decoration-color: rgba(168, 85, 247, 0.7);
+}
+
 .check {
     width: 18px;
     height: 18px;
@@ -462,17 +539,23 @@ h1 {
     line-height: 1;
 }
 
-.task-item span:last-child {
+.task-item.is-upcoming .check {
+    background: transparent;
+    border-color: rgba(168, 85, 247, 0.42);
+}
+
+.task-item time {
     color: var(--muted);
     font-size: 0.76rem;
     font-weight: 600;
+    font-variant-numeric: tabular-nums;
 }
 
 .progress-panel {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 18px;
+    margin-top: 20px;
     gap: 12px;
 }
 
@@ -484,6 +567,7 @@ h1 {
     display: grid;
     place-items: center;
     position: relative;
+    box-shadow: 0 0 0 8px rgba(124, 58, 237, 0.07);
 }
 
 .ring::before {
@@ -508,20 +592,50 @@ h1 {
 
 .progress-copy strong {
     display: block;
-    font-size: 1.25rem;
-    margin-bottom: 6px;
+    font-size: 1.2rem;
+    margin-bottom: 4px;
 }
 
 .progress-copy small {
     color: var(--muted);
 }
 
+.features-section {
+    position: relative;
+    z-index: 1;
+    padding: 0 32px 32px;
+}
+
+.features-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    padding: 16px 2px 20px;
+}
+
+.section-kicker {
+    color: #a78bfa;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.features-heading h2 {
+    max-width: 380px;
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(1.45rem, 2.4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+    text-align: right;
+}
+
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
-    padding: 0 32px 32px;
-    margin-top: 12px;
 }
 
 .feature-box {
@@ -538,7 +652,7 @@ h1 {
 }
 
 .feature-box:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     border-color: rgba(168, 85, 247, 0.42);
     box-shadow: 0 18px 30px rgba(15, 23, 42, 0.22);
 }
@@ -573,6 +687,10 @@ h1 {
     line-height: 1.6;
     font-size: 0.94rem;
     max-width: 300px;
+}
+
+button {
+    cursor: pointer;
 }
 
 .page-footer {
@@ -620,7 +738,7 @@ h1 {
         padding: 30px 22px 20px;
     }
 
-    .feature-grid {
+    .features-section {
         padding: 0 22px 22px;
     }
 }
@@ -638,12 +756,24 @@ h1 {
 
     .notify-form {
         flex-direction: column;
+        align-items: stretch;
         border-radius: 16px;
+    }
+
+    .features-heading {
+        display: block;
+        padding: 14px 2px 18px;
+    }
+
+    .features-heading h2 {
+        margin-top: 8px;
+        text-align: left;
     }
 
     .notify-form button {
         border-radius: 12px;
-        margin: 0 12px 12px;
+        min-height: 52px;
+        margin: 0;
     }
 
     .page-footer {

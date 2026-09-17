@@ -73,7 +73,7 @@
                         <div class="stats-stack">
                             <div class="dashboard-card">
                                 <div class="mini-header">
-                                    <span>Today</span>
+                                    <span>Today <small>• Sep 18</small></span>
                                     <div class="mini-dots" aria-hidden="true">
                                         <span></span>
                                         <span></span>
@@ -82,26 +82,26 @@
                                 </div>
 
                                 <div class="task-list" aria-label="Sample tasks">
-                                    <div class="task-item">
+                                    <div class="task-item is-complete">
                                         <div class="task-main">
                                             <span class="check"><i class="fa fa-check"></i></span>
                                             <span>Design sprint review</span>
                                         </div>
-                                        <span>9:00</span>
+                                        <time datetime="09:00">9:00</time>
                                     </div>
-                                    <div class="task-item">
+                                    <div class="task-item is-complete">
                                         <div class="task-main">
                                             <span class="check"><i class="fa fa-check"></i></span>
                                             <span>Weekly planning</span>
                                         </div>
-                                        <span>11:30</span>
+                                        <time datetime="11:30">11:30</time>
                                     </div>
-                                    <div class="task-item">
+                                    <div class="task-item is-upcoming">
                                         <div class="task-main">
-                                            <span class="check"><i class="fa fa-check"></i></span>
+                                            <span class="check" aria-hidden="true"></span>
                                             <span>Follow up on tasks</span>
                                         </div>
-                                        <span>14:00</span>
+                                        <time datetime="14:00">14:00</time>
                                     </div>
                                 </div>
 
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="progress-copy">
                                         <strong>2 tasks left</strong>
-                                        <small>Momentum is building</small>
+                                        <small>3 of 5 tasks complete</small>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,12 @@
                 </div>
             </div>
 
-            <div class="feature-grid" id="features">
+            <section class="features-section" id="features" aria-labelledby="features-title">
+                <div class="features-heading">
+                    <span class="section-kicker">Designed for your flow</span>
+                    <h2 id="features-title">Simple by design.<br>Powerful in practice.</h2>
+                </div>
+            <div class="feature-grid">
                 <div class="feature-box">
                     <div class="icon-box"><i class="fa fa-check-square-o"></i></div>
                     <h5>Smart task tracking</h5>
@@ -139,6 +144,7 @@
                     <p>Stay consistent with meaningful progress, better routines, and a clearer path to daily wins.</p>
                 </div>
             </div>
+            </section>
         </main>
 
         <footer class="page-footer" id="updates">

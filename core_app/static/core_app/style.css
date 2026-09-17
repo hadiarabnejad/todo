@@ -337,6 +337,13 @@ h1 {
     font-size: 0.7rem;
 }
 
+.check i,
+.brand-mark i,
+.icon-box i {
+    font-size: inherit;
+    line-height: 1;
+}
+
 .task-item span:last-child {
     color: var(--muted);
     font-size: 0.76rem;
